@@ -1,0 +1,49 @@
+version: '2'
+
+services:
+#  redis:
+#    image: docker.io/bitnami/redis:7.0
+#    environment:
+#      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+#      - ALLOW_EMPTY_PASSWORD=yes
+#      # - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+#    ports:
+#      - '6379:6379'
+#    volumes:
+#      - 'redis_data:/bitnami/redis/data'
+
+  mariadb:
+    image: docker.io/bitnami/mariadb:10.9
+    ports:
+      - '3306:3306'
+    volumes:
+      - 'mariadb_data:/bitnami/mariadb'
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+    healthcheck:
+      test: ['CMD', '/opt/bitnami/scripts/mariadb/healthcheck.sh']
+      interval: 15s
+      timeout: 5s
+      retries: 6
+
+#  rabbitmq:
+#    image: rabbitmq-custom
+#    ports:
+#      - '5672:5672'
+#      - '15672:15672'
+#    environment:
+#      - RABBITMQ_SECURE_PASSWORD=no
+#      - RABBITMQ_LOGS=-
+#      - RABBITMQ_USERNAME=user
+#      - RABBITMQ_PASSWORD=bitnami
+#      - RABBITMQ_VHOST=/
+#    volumes:
+#      - 'rabbitmq_data:/bitnami/rabbitmq/mnesia'
+volumes:
+#  redis_data:
+#    driver: local
+  mariadb_data:
+    driver: local
+#  rabbitmq_data:
+#    driver: local
